@@ -1,0 +1,305 @@
+.review-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - 120px);
+}
+
+/* Action & Status Header */
+.review-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 22px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.review-stats-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-pill {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill-approved {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pill-rejected {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.pill-pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.review-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Split Panes Workspace */
+.review-split-workspace {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Left Panel: Suggestions / Issues list */
+.review-left-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suggestions-scroll-list {
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.suggestion-nav-card {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.suggestion-nav-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(0, 212, 255, 0.4);
+}
+
+.suggestion-nav-card.active {
+  border-color: var(--accent-primary);
+  background: rgba(0, 212, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.15);
+}
+
+.suggestion-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suggestion-card-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.suggestion-card-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Right Panel: Editor & AI suggestion pane */
+.review-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.monaco-editor-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-card-header {
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editor-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editor-canvas-wrapper {
+  height: 320px;
+  background: #1e1e1e;
+}
+
+/* AI Suggestion Remediation Box (Below Editor) */
+.ai-suggestion-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.suggestion-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ai-engine-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.confidence-score-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.explanation-text {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.fix-preview-box {
+  background: #090914;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fix-preview-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  letter-spacing: 0.5px;
+}
+
+.code-pre-tag {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  color: #a7f3d0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Suggestion Decision Buttons */
+.suggestion-decision-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.decision-btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-approve {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.btn-approve:hover {
+  background: rgba(16, 185, 129, 0.35);
+  border-color: #10b981;
+}
+
+.btn-reject {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.btn-reject:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+}
+
+@media (max-width: 992px) {
+  .review-page {
+    height: auto;
+  }
+  .review-split-workspace {
+    grid-template-columns: 1fr;
+  }
+  .review-left-panel {
+    max-height: 300px;
+  }
+}

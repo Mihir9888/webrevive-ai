@@ -1,0 +1,99 @@
+.diff-viewer-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.diff-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.diff-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diff-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diff-view-toggle {
+  display: flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+}
+
+.diff-toggle-btn {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.diff-toggle-btn.active {
+  background: var(--accent-primary-dim);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.diff-content-wrapper {
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Custom override for react-diff-viewer table */
+.diff-viewer-container table {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.diff-legend {
+  display: flex;
+  gap: 14px;
+  font-size: 0.78rem;
+  align-items: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-dot.removed {
+  background-color: #ef4444;
+}
+
+.legend-dot.added {
+  background-color: #10b981;
+}

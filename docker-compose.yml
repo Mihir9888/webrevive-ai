@@ -1,0 +1,122 @@
+version: "3.9"
+
+services:
+  # ============================================================================
+  # PostgreSQL Database
+  # ============================================================================
+  db:
+    image: postgres:15-alpine
+    container_name: webrevive-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-webrevive}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-webrevive_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-webrevive_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-webrevive} -d ${POSTGRES_DB:-webrevive_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - webrevive-network
+
+  # ============================================================================
+  # Local Ollama AI Model Server
+  # ============================================================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: webrevive-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - webrevive-network
+
+  # ============================================================================
+  # WebRevive FastAPI Backend (with Playwright headless runner)
+  # ============================================================================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webrevive-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-webrevive}:${POSTGRES_PASSWORD:-webrevive_secret}@db:5432/${POSTGRES_DB:-webrevive_db}
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-qwen2.5-coder:7b}
+      - SECRET_KEY=${SECRET_KEY:-webrevive-development-super-secret-key-32chars}
+      - DEBUG=${DEBUG:-True}
+      - CORS_ORIGINS=http://localhost:3000,http://frontend:3000
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - webrevive-network
+
+  # ============================================================================
+  # WebRevive Frontend React SPA (Nginx)
+  # ============================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: webrevive-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - webrevive-network
+
+# ==============================================================================
+# Persistent Volumes
+# ==============================================================================
+volumes:
+  postgres_data:
+    name: webrevive_postgres_data
+  ollama_models:
+    name: webrevive_ollama_models
+
+# ==============================================================================
+# Isolated Bridge Network
+# ==============================================================================
+networks:
+  webrevive-network:
+    name: webrevive-network
+    driver: bridge

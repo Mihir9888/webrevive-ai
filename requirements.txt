@@ -1,0 +1,27 @@
+# WebRevive AI - Core Backend & CLI Requirements
+
+# Web framework & ASGI server
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+
+# Database & ORM
+sqlalchemy>=2.0.28
+psycopg2-binary>=2.9.9
+alembic>=1.13.1
+
+# Browser automation & HTTP clients
+playwright>=1.42.0
+httpx>=0.27.0
+
+# CLI & Formatting
+click>=8.1.7
+rich>=13.7.0
+
+# Testing & Quality Assurance
+pytest>=8.1.0
+pytest-asyncio>=0.23.5
+flake8>=7.0.0
+black>=24.2.0
+isort>=5.13.2

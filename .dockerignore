@@ -1,0 +1,56 @@
+# Git and VCS
+.git
+.gitignore
+.gitattributes
+.github
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+.npm/
+
+# Environment and sensitive files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Temporary and log files
+*.log
+tmp/
+temp/
+scratch/
+.webrevive/
+*.swp
+*~
+.DS_Store
+Thumbs.db
